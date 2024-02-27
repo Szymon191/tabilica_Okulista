@@ -8,7 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+
+    private List<TextView> textViewList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,56 +21,36 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button buttonZwie = findViewById(R.id.buttonZwieksz);
-        buttonZwie.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                float[] rozmiary = new float[5];
-                TextView textView1 = findViewById(R.id.textView);
-                rozmiary[0] = textView1.getTextSize();
-                TextView textView2 = findViewById(R.id.textView2);
-                rozmiary[1] = textView2.getTextSize();
-                TextView textView3 = findViewById(R.id.textView3);
-                rozmiary[2] = textView3.getTextSize();
-                TextView textView4 = findViewById(R.id.textView4);
-                rozmiary[3] = textView4.getTextSize();
-                TextView textView5 = findViewById(R.id.textView5);
-                rozmiary[4] = textView5.getTextSize();
+        textViewList.add(findViewById(R.id.textView));
+        textViewList.add(findViewById(R.id.textView2));
+        textViewList.add(findViewById(R.id.textView3));
+        textViewList.add(findViewById(R.id.textView4));
+        textViewList.add(findViewById(R.id.textView5));
 
-                textView1.setTextSize(TypedValue.COMPLEX_UNIT_PX, rozmiary[0]+=1);
-                textView2.setTextSize(TypedValue.COMPLEX_UNIT_PX, rozmiary[1]+=1);
-                textView3.setTextSize(TypedValue.COMPLEX_UNIT_PX, rozmiary[2]+=1);
-                textView4.setTextSize(TypedValue.COMPLEX_UNIT_PX, rozmiary[3]+=1);
-                textView5.setTextSize(TypedValue.COMPLEX_UNIT_PX, rozmiary[4]+=1);
-
-
-            }
-        });
-
+        buttonZwie.setOnClickListener(new ButtonListener());
 
         Button buttonZmiej = findViewById(R.id.buttonPomniejsz);
-        buttonZmiej.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                float[] rozmiary = new float[5];
-                TextView textView1 = findViewById(R.id.textView);
-                rozmiary[0] = textView1.getTextSize();
-                TextView textView2 = findViewById(R.id.textView2);
-                rozmiary[1] = textView2.getTextSize();
-                TextView textView3 = findViewById(R.id.textView3);
-                rozmiary[2] = textView3.getTextSize();
-                TextView textView4 = findViewById(R.id.textView4);
-                rozmiary[3] = textView4.getTextSize();
-                TextView textView5 = findViewById(R.id.textView5);
-                rozmiary[4] = textView5.getTextSize();
+        buttonZmiej.setOnClickListener(new ButtonListener());
+    }
 
-                textView1.setTextSize(TypedValue.COMPLEX_UNIT_PX, rozmiary[0]-=1);
-                textView2.setTextSize(TypedValue.COMPLEX_UNIT_PX, rozmiary[1]-=1);
-                textView3.setTextSize(TypedValue.COMPLEX_UNIT_PX, rozmiary[2]-=1);
-                textView4.setTextSize(TypedValue.COMPLEX_UNIT_PX, rozmiary[3]-=1);
-                textView5.setTextSize(TypedValue.COMPLEX_UNIT_PX, rozmiary[4]-=1);
+    class ButtonListener implements View.OnClickListener{
 
+        /*
+         private boolean isAdd;
+        public ButtonListener(boolean isAdd){
+            this.isAdd = isAdd;
+        }
 
+         */
+        @Override
+        public void onClick(View v) {
+            for(TextView textView: textViewList){
+                float size = textView.getTextSize();
+                if(((Button) v).getText().equals("+"))
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size+5);
+                else
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size-5);
             }
-        });
+        }
     }
 }
